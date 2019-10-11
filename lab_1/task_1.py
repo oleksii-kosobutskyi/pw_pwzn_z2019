@@ -2,7 +2,6 @@ def task_1():
     return ''
 
 
-
 assert task_1() == '''
 1
 22
