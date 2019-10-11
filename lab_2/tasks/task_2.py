@@ -15,6 +15,7 @@ def stack_operation(stack_commands):
     pass
 
 
+
 if __name__ == "__main__":
     commands = [
         ('push', 97),

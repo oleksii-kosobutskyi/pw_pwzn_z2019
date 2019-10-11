@@ -11,6 +11,7 @@ def count_letters(msg):
     pass
 
 
+
 if __name__ == '__main__':
     msg = 'Abrakadabra'
     assert count_letters(msg) == ('a', 4)
