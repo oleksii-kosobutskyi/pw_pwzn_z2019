@@ -12,9 +12,15 @@ def stack_operation(stack_commands):
     :return: List of outputs from commands.
     :rtype: list
     """
-    pass
-
-
+    output=[];
+    i=0;
+    for element in stack_commands:
+        if 'push' in element[0]:
+            output.append(element[1]);
+        elif 'pop' in element[0]:
+            output.pop();
+        i+=1;
+    return output;
 
 if __name__ == "__main__":
     commands = [
