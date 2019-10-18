@@ -18,6 +18,7 @@ def check_frequency(input):
     pass
 
 
+
 _input = """
 1 5
 1 6

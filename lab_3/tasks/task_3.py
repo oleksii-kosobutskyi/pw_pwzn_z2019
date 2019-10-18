@@ -18,6 +18,7 @@ UWAGA: Proszę ograniczyć użycie pętli do minimum.
 import datetime
 
 
+
 def sort_dates(date_str, date_format=''):
     """
     Parses and sorts given message to list of datetimes objects descending.
