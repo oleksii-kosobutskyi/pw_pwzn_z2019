@@ -1,6 +1,11 @@
 def task_1():
-    return ''
-
+    output=""
+    for i in range(1,10):
+        for j in range(0,i):
+            output+=str(i)
+        output+="\n"
+    print(output)
+    return
 
 assert task_1() == '''
 1
