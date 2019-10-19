@@ -14,15 +14,17 @@ def counting_sort(values, _max, _min=0):
     :type _min: int
     :return:
     """
-    output=[];
+    output=[]
     for i in range(_min,_max):
         for element in values:
-            index=0;
+            index=0
             if element==i:
-                index+=1;
+                index+=1
             for j in range(0,index):
-                output.append(i);
-    return output;
+                output.append(i)
+    return output
+
+
 
 if __name__ == '__main__':
     assert counting_sort(

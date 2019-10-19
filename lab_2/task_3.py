@@ -8,17 +8,20 @@ def unique(values):
     :return: Unique values in order of appear.
     :rtype: list
     """
-    output=[];
-    i=0;
+    output=[]
+    i=0
     for element in values:
-        unique=True;
+        unique=True
         for j in output:
             if element == j:
-                unique=False;
+                unique=False
         if unique:
-            output.append(element);
-        i+=1;
-    return output;
+            output.append(element)
+        i+=1
+    return output
+
+
 
 if __name__ == "__main__":
     assert [1, 5, 3, 6, 7, 2, 4] == unique([1, 5, 3, 5, 6, 7, 2, 1, 4, 1, 5])
+    

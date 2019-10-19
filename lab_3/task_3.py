@@ -16,8 +16,7 @@ Funkcje group_dates oraz format_day mają pomoc w grupowaniu kodu.
 UWAGA: Proszę ograniczyć użycie pętli do minimum.
 """
 import datetime
-
-
+import pytz
 
 def sort_dates(date_str, date_format=''):
     """
@@ -30,7 +29,9 @@ def sort_dates(date_str, date_format=''):
     :return: sorted desc list of utc datetime objects
     :rtype: list
     """
-
+    output=date_str.strip() # usuwa puste znaki na początku i końcu
+    output=output.split('\n') # dzieli linie na elementy
+    output=list(map(lambda x: x.strip(), output))
 
 def group_dates(dates):
     """
@@ -40,7 +41,8 @@ def group_dates(dates):
     :type dates: list
     :return:
     """
-
+    output = sorted(dates, key=lambda date: datetime.strptime(str(date),'%Y-%m-%d %H:%M:%S+00:00'))
+    return output
 
 def format_day(day, events):
     """
@@ -55,7 +57,6 @@ def format_day(day, events):
     """
     pass
 
-
 def parse_dates(date_str, date_format=''):
     """
     Parses and groups (in UTC) given list of events.
@@ -67,7 +68,9 @@ def parse_dates(date_str, date_format=''):
     :return: parsed events
     :rtype: str
     """
-    pass
+    date_time = datetime.datetime.strptime(date_str, "%a %d %b %Y %X %z")
+    date_time = date_time.astimezone(pytz.timezone('UTC'))
+
 
 
 if __name__ == '__main__':
