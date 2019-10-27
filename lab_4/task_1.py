@@ -16,7 +16,7 @@ class Calculator:
         # wynik zapisany w tym atrybucie
         self._short_memory = None
 
-    def run(self, operator, arg1, arg2):
+    def run(self, operator, arg1, arg2=None):
         """
         Returns result of given operation.
 

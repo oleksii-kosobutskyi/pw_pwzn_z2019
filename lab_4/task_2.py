@@ -12,14 +12,19 @@ Wszystkie metody sprawdzają wymiar.
 
 
 class Vector:
-    dim = None  # Wymiar vectora
+    _dim = None  # Wymiar vectora
     def __init__(self, *args):
-        if len(args)==0:
-            self.values = (0,0)
-        else:
+        if len(args)!=0:
             self.values = args
-            dim = len(args)
+        else:
+            self.values = (0,)
 
+    @property
+    # wymiar wektora
+    def dim(self):
+        self._dim = len(self.values)
+        return self._dim
+    
     # dodawanie wektorów
     def __add__(self, another):
         if isinstance(another,Vector):
