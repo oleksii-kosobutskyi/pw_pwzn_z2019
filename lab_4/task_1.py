@@ -29,19 +29,35 @@ class Calculator:
         :return: result of operation
         :rtype: float
         """
-        raise NotImplementedError
+        if arg2 == None:
+            if self.memory:
+                arg2=self.memory
+            else:
+                raise ValueError("Pamięć jest pusta")
+        operations = {'+': arg1+arg2, '-': arg1-arg2, '*': arg1*arg2, '/': arg1/arg2}
+        if operator in operations:
+            self._short_memory = operations[operator]
+            return self._short_memory
+        else:
+            raise ValueError("Zły operator")
 
     def memorize(self):
         """Saves last operation result to memory."""
-        raise NotImplementedError
+        if self._short_memory:
+            self.memory = self._short_memory
+        else:
+            raise ValueError("Pamięć jest pusta")
 
     def clean_memory(self):
         """Cleans memorized value"""
-        raise NotImplementedError
+        self.memory = None
 
     def in_memory(self):
         """Prints memorized value."""
-        print(f"Zapamiętana wartość: {self.memory}")
+        if self._short_memory:
+            print(f"Zapamiętana wartość: {self.memory}")
+        else:
+            raise ValueError("Pamięć jest pusta")
 
 
 if __name__ == '__main__':

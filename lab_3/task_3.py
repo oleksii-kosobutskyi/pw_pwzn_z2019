@@ -70,6 +70,8 @@ def parse_dates(date_str, date_format=''):
     """
     date_time = datetime.datetime.strptime(date_str, "%a %d %b %Y %X %z")
     date_time = date_time.astimezone(pytz.timezone('UTC'))
+    dates = group_dates(dates)
+    return dates
 
 
 
