@@ -14,8 +14,61 @@ Wszystkie metody sprawdzają wymiar.
 class Vector:
     dim = None  # Wymiar vectora
     def __init__(self, *args):
-        raise NotImplemented
+        if len(args)==0:
+            self.values = (0,0)
+        else:
+            self.values = args
+            dim = len(args)
 
+    # dodawanie wektorów
+    def __add__(self, another):
+        if isinstance(another,Vector):
+            if self.dim == another.dim:
+                output = tuple(a+b for a,b in zip(self.values, another.values))
+                return Vector(*output)
+            else:
+                raise ValueError("Różne wymiary wektorów")
+        else:
+            raise ValueError("Obiekt jest innego typu niż Vector")
+
+    # odejmowanie wektorów
+    def __sub__(self, another):
+        if isinstance(another,Vector):
+            if self.dim == another.dim:
+                output = tuple(a-b for a,b in zip(self.values, another.values))
+                return Vector(*output)
+            else:
+                raise ValueError("Różne wymiary wektorów")
+        else:
+            raise ValueError("Obiekt jest innego typu niż Vector")
+    
+    # mnożenie wektorów
+    def __mul__(self, another):
+        if isinstance(another,Vector):
+            if self.dim == another.dim:
+                output = sum(a*b for a,b in zip(self.values, another.values))
+                return output
+            else:
+                raise ValueError("Różne wymiary wektorów")
+        else:
+            output = tuple(a*another for a in self.values)
+            return Vector(*output)
+
+    # równosć wektorów
+    def __eq__(self, another):
+        if isinstance(another,Vector):
+            if self.dim == another.dim:
+                return self.values == another.values
+            else:
+                raise ValueError("Różne wymiary wektorów")
+        else:
+            raise ValueError("Obiekt jest innego typu niż Vector")
+
+    # długosć wektora
+    def __len__(self):
+        length=sum(tuple(a**2 for a in self.values))**0.5
+        return int(length)
+    
     @staticmethod
     def calculate_vector(beg, end):
         """
@@ -28,7 +81,13 @@ class Vector:
         :return: Calculated vector
         :rtype: tuple
         """
-        raise NotImplemented
+        v_beg=Vector(*beg)
+        v_end=Vector(*end)
+        if v_beg.dim == v_end.dim:
+            output = v_end-v_beg
+            return tuple(output.values)
+        else:
+            raise ValueError("Różne wymiary wektorów")
 
     @classmethod
     def from_points(cls, beg, end):
@@ -43,7 +102,12 @@ class Vector:
         :return: New vector
         :rtype: tuple
         """
-        raise NotImplemented
+        v_beg=Vector(*beg)
+        v_end=Vector(*end)
+        if v_beg.dim == v_end.dim:
+            return v_end-v_beg
+        else:
+            raise ValueError("Różne wymiary wektorów")
 
 
 if __name__ == '__main__':
