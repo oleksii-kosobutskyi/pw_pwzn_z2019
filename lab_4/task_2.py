@@ -13,18 +13,70 @@ Wszystkie metody sprawdzają wymiar.
 
 class Vector:
     _dim = None  # Wymiar vectora
+    
     def __init__(self, *args):
         if len(args)!=0:
             self.values = args
+            self._dim = len(args)
         else:
             self.values = (0,)
+            self._dim = 0
 
+    # wymiar wektora
+    def __len__(self):
+        return self._dim
+    
     @property
     # wymiar wektora
     def dim(self):
-        self._dim = len(self.values)
         return self._dim
     
+    @property
+    # długosć wektora
+    def len(self):
+        length=sum(tuple(a**2 for a in self.values))**0.5
+        return length
+    
+    @staticmethod
+    def calculate_vector(beg, end):
+        """
+        Calculate vector from given points
+
+        :param beg: Begin point
+        :type beg: list, tuple
+        :param end: End point
+        :type end: list, tuple
+        :return: Calculated vector
+        :rtype: tuple
+        """
+        v_beg=Vector(*beg)
+        v_end=Vector(*end)
+        if v_beg.dim == v_end.dim:
+            output = v_end-v_beg
+            return tuple(output.values)
+        else:
+            raise ValueError("Różne wymiary wektorów")
+
+    @classmethod
+    def from_points(cls, beg, end):
+        """"""
+        """
+        Generate vector from given points.
+
+        :param beg: Begin point
+        :type beg: list, tuple
+        :param end: End point
+        :type end: list, tuple
+        :return: New vector
+        :rtype: tuple
+        """
+        v_beg=Vector(*beg)
+        v_end=Vector(*end)
+        if v_beg.dim == v_end.dim:
+            return v_end-v_beg
+        else:
+            raise ValueError("Różne wymiary wektorów")
+            
     # dodawanie wektorów
     def __add__(self, another):
         if isinstance(another,Vector):
@@ -69,59 +121,17 @@ class Vector:
         else:
             raise ValueError("Obiekt jest innego typu niż Vector")
 
-    # długosć wektora
-    def __len__(self):
-        length=sum(tuple(a**2 for a in self.values))**0.5
-        return int(length)
-    
-    @staticmethod
-    def calculate_vector(beg, end):
-        """
-        Calculate vector from given points
-
-        :param beg: Begging point
-        :type beg: list, tuple
-        :param end: End point
-        :type end: list, tuple
-        :return: Calculated vector
-        :rtype: tuple
-        """
-        v_beg=Vector(*beg)
-        v_end=Vector(*end)
-        if v_beg.dim == v_end.dim:
-            output = v_end-v_beg
-            return tuple(output.values)
-        else:
-            raise ValueError("Różne wymiary wektorów")
-
-    @classmethod
-    def from_points(cls, beg, end):
-        """"""
-        """
-        Generate vector from given points.
-
-        :param beg: Begging point
-        :type beg: list, tuple
-        :param end: End point
-        :type end: list, tuple
-        :return: New vector
-        :rtype: tuple
-        """
-        v_beg=Vector(*beg)
-        v_end=Vector(*end)
-        if v_beg.dim == v_end.dim:
-            return v_end-v_beg
-        else:
-            raise ValueError("Różne wymiary wektorów")
 
 
 if __name__ == '__main__':
     v1 = Vector(1,2,3)
     v2 = Vector(1,2,3)
+    assert len(Vector(3,4)) == 2
+    assert Vector(3,4).dim == 2
+    assert Vector(3,4).len == 5.
+    assert Vector.calculate_vector([0, 0, 0], [1,2,3]) == (1,2,3)
+    assert Vector.from_points([0, 0, 0], [1,2,3]) == Vector(1,2,3)
     assert v1 + v2 == Vector(2,4,6)
     assert v1 - v2 == Vector(0,0,0)
     assert v1 * 2 == Vector(2,4,6)
     assert v1 * v2 == 14
-    assert len(Vector(3,4)) == 5.
-    assert Vector.calculate_vector([0, 0, 0], [1,2,3]) == (1,2,3)
-    assert Vector.from_points([0, 0, 0], [1,2,3]) == Vector(1,2,3)

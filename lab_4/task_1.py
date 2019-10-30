@@ -60,6 +60,7 @@ class Calculator:
             raise ValueError("Pamięć jest pusta")
 
 
+
 if __name__ == '__main__':
     calc = Calculator()
     b = calc.run('+', 1, 2)
