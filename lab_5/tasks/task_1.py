@@ -10,23 +10,29 @@ jak i operację z argumentem domyślnym) - EmptyMemory
 from operator import add, mul, sub, truediv
 
 
+
 class CalculatorError(Exception):
     pass
+
 
 
 class WrongOperation(Exception):
     pass
 
 
+
 class NotNumberArgument(Exception):
     pass
+
 
 
 class EmptyMemory(Exception):
     pass
 
 
+
 class Calculator:
+    
     operations = {
         '+': add,
         '-': sub,
@@ -56,13 +62,13 @@ class Calculator:
             if arg2:
                 try:
                     self._short_memory = self.operations[operator](arg1, arg2)
-                except ZeroDivisionError as zde:
-                    raise CalculatorError from zde
-                except TypeError as te:
-                    raise NotNumberArgument from te
+                except ZeroDivisionError:
+                    raise CalculatorError() from ZeroDivisionError
+                except TypeError:
+                    raise NotNumberArgument() from TypeError
                 return self._short_memory
             else:
-                raise EmptyMemory from ZeroDivisionError
+                raise EmptyMemory() from ZeroDivisionError
         else:
             raise WrongOperation()
 
