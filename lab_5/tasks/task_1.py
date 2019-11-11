@@ -54,8 +54,17 @@ class Calculator:
         if operator in self.operations:
             arg2 = arg2 or self.memory
             if arg2:
-                self._short_memory = self.operations[operator](arg1, arg2)
+                try:
+                    self._short_memory = self.operations[operator](arg1, arg2)
+                except ZeroDivisionError as zde:
+                    raise CalculatorError from zde
+                except TypeError as te:
+                    raise NotNumberArgument from te
                 return self._short_memory
+            else:
+                raise EmptyMemory from ZeroDivisionError
+        else:
+            raise WrongOperation()
 
     @property
     def memory(self):
@@ -71,7 +80,11 @@ class Calculator:
 
     def in_memory(self):
         """Prints memorized value."""
-        print(f"Zapamiętana wartość: {self.memory}")
+        if self.memory:
+            print(f"Zapamiętana wartość: {self.memory}")
+        else:
+            raise EmptyMemory()
+
 
 
 if __name__ == '__main__':
