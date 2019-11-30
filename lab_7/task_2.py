@@ -23,7 +23,16 @@ def calculate_neighbours(board):
     :type board: np.ndarray
     :param periodic
     """
-    pass
+    number_of_neighbours = np.zeros(shape=board.shape, dtype=np.uint8)
+    number_of_neighbours[:, 0:-1] += board[:, 1:None]  # neighbours to the right
+    number_of_neighbours[:, 1:None] += board[:, 0:-1]  # neighbours to the left
+    number_of_neighbours[1:None, :] += board[0:-1, :]  # neighbours to the top
+    number_of_neighbours[0:-1, :] += board[1:None, :]  # neighbours to the bottom
+    number_of_neighbours[1:None, 0:-1] += board[0:-1, 1:None]  # neighbours to the top right
+    number_of_neighbours[1:None, 1:None] += board[0:-1, 0:-1]  # neighbours to the top left
+    number_of_neighbours[0:-1, 0:-1] += board[1:None, 1:None]  # neighbours to the bottom right
+    number_of_neighbours[0:-1, 1:None] += board[1:None, 0:-1]  # neighbours to the bottom left
+    return number_of_neighbours
 
 
 def iterate(board):
@@ -36,7 +45,7 @@ def iterate(board):
     2. Jeśli komórka jest martwa i ma trzech sąsiadów to ożywa.
     3. Jeśli komórka jest żywa i ma mniej niż dwóch sąsiadów to umiera,
        jeśli ma więcej niż trzech sąsiadów również umiera.
-       W przeciwnym wypadku (dwóch lub trzech sąsiadów) to żyje dalej.
+    4.  W przeciwnym wypadku (dwóch lub trzech sąsiadów) to żyje dalej.
     (1 pkt.)
 
     :param board: 2D array of agents states.
@@ -44,7 +53,14 @@ def iterate(board):
     :return: next board state
     :rtype: np.ndarray
     """
-    pass
+    number_of_neighbours = calculate_neighbours(board)
+    is_alive = board
+    is_dead = np.invert(board)
+
+    to_life = is_dead & (number_of_neighbours == 3) # rule 2
+    stay_alive = is_alive & (number_of_neighbours >= 2) & (number_of_neighbours <= 3) # rule 4
+
+    return to_life | stay_alive
 
 
 if __name__ == '__main__':
@@ -66,11 +82,10 @@ if __name__ == '__main__':
         [1, 1, 3, 2, 3, 0,],
     ])
     assert iterate(_board) == np.array([
-        [False, False, False, False, False, False],
-        [ True, False,  True, False, False,  True],
-        [ True, False, False,  True, False,  True],
-        [False,  True, False, False, False,  True],
-        [False, False, False,  True, False, False],
-        [False, False,  True,  True, False, False],
-    ])
-
+        [False, False, False, False,  True, False],
+       [ True, False,  True, False, False,  True],
+       [ True, False, False,  True, False,  True],
+       [ True,  True, False, False, False,  True],
+       [False, False, False,  True, False, False],
+       [False, False,  True,  True,  True, False],
+    ])).all()

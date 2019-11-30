@@ -11,13 +11,19 @@ def least_sq(xy):
 
     A = (Sum(x^2)*Sum(y)-Sum(x)*Sum(xy))/Delta
     B = (N*Sum(xy)-Sum(x)*Sum(y))/Delta
-    Delta = N*Sum(x^2) - (Sum(x)^2)
+    Delta = N*Sum(x^2)-(Sum(x)^2)
 
     :param xy: vector of 2D points (shape (2, n))
     :type xy: np.ndarray
     :return: Tuple of fitted parameters
     """
-    pass
+    x = xy[0]
+    y = xy[1]
+    N = np.size(x)
+    delta = N * np.sum(x**2) - np.sum(x)**2
+    A = (np.sum(x**2) * np.sum(y) - np.sum(x) * np.sum(x*y)) / delta
+    B = (N * np.sum(x*y) - np.sum(x)*np.sum(y)) / delta
+    return (A, B)
 
 
 if __name__ == '__main__':
@@ -221,4 +227,5 @@ if __name__ == '__main__':
                         98.00343145869182,
                         98.9982680433363,
                         100.00083927400149]])
-    np.testing.assert_allclose(least_sq(points), (1, -1), atol=0.1)
+    np.testing.assert_allclose(least_sq(points), (1, 1), atol=0.1)
+    
