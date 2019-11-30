@@ -88,4 +88,4 @@ if __name__ == '__main__':
        [ True,  True, False, False, False,  True],
        [False, False, False,  True, False, False],
        [False, False,  True,  True,  True, False],
-    ])).all()
+    ]).all()
