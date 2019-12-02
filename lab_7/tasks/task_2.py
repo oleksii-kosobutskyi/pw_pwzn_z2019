@@ -54,11 +54,9 @@ def iterate(board):
     :rtype: np.ndarray
     """
     number_of_neighbours = calculate_neighbours(board)
-    is_alive = board
-    is_dead = np.invert(board)
 
-    to_life = is_dead & (number_of_neighbours == 3) # rule 2
-    stay_alive = is_alive & (number_of_neighbours >= 2) & (number_of_neighbours <= 3) # rule 4
+    to_life = (board == False) & (number_of_neighbours == 3) # rule 2
+    stay_alive = (board == True) & (number_of_neighbours >= 2) & (number_of_neighbours <= 3) # rule 4
 
     return to_life | stay_alive
 
@@ -72,7 +70,6 @@ if __name__ == '__main__':
         [False, False, False,  True, False, False],
         [False,  True,  True,  True, False,  True]
     ])
-    print(iterate(_board))
     assert (calculate_neighbours(_board) == np.array([
         [1, 2, 2, 1, 3, 1,],
         [2, 4, 3, 4, 6, 3,],

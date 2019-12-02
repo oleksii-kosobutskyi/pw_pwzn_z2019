@@ -9,20 +9,20 @@ def least_sq(xy):
     najmniejszych kwadratów.
     (1 pkt.)
 
-    A = (Sum(x^2)*Sum(y)-Sum(x)*Sum(xy))/Delta
-    B = (N*Sum(xy)-Sum(x)*Sum(y))/Delta
     Delta = N*Sum(x^2)-(Sum(x)^2)
+    A = (N*Sum(xy)-Sum(x)*Sum(y))/Delta
+    B = (Sum(x^2)*Sum(y)-Sum(x)*Sum(xy))/Delta
 
     :param xy: vector of 2D points (shape (2, n))
     :type xy: np.ndarray
     :return: Tuple of fitted parameters
     """
-    x = xy[0]
-    y = xy[1]
+    x = xy[0,:]
+    y = xy[1,:]
     N = np.size(x)
-    delta = N * np.sum(x**2) - np.sum(x)**2
-    A = (np.sum(x**2) * np.sum(y) - np.sum(x) * np.sum(x*y)) / delta
-    B = (N * np.sum(x*y) - np.sum(x)*np.sum(y)) / delta
+    Delta = N * np.sum(x**2) - np.sum(x)**2
+    A = (N * np.sum(x*y) - np.sum(x)*np.sum(y)) / Delta
+    B = (np.sum(x**2) * np.sum(y) - np.sum(x) * np.sum(x*y)) / Delta
     return (A, B)
 
 
