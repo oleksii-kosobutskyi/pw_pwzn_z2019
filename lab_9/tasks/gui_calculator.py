@@ -18,6 +18,13 @@ class CalculatorGUI(tk.Frame):
         self.bottom_pad = self.init_bottom_pad()
         self.bottom_pad.pack(side=tk.BOTTOM)
 
+        for num in range(0,10):
+            self.bind(str(num), partial(self.update_var, num))
+        for operation in self.calculator.operations.keys():
+            self.screen.bind(f'<{operation}>', partial(self.set_operator, operation))
+        self.bind('<Return>', self.calculate_result)
+        self.focus_set()
+
     def init_variables(self):
         self.variables['var_1'] = ''
         self.variables['var_2'] = ''
@@ -38,11 +45,6 @@ class CalculatorGUI(tk.Frame):
             ).grid(row=ii // 3, column=(2-ii) % 3)
         ii += 1
         tk.Button(
-            num_pad, text='C', width=5,
-            command=self.clear
-        ).grid(row=ii // 3, column=ii % 3)
-        ii += 1
-        tk.Button(
             num_pad, text='0', width=5,
             command=partial(self.update_var, '0')
         ).grid(row=ii // 3, column=ii % 3)
@@ -60,6 +62,30 @@ class CalculatorGUI(tk.Frame):
                 operation_pad, text=operation, width=5,
                 command=partial(self.set_operator, operation),
             ).grid(row=ii, column=0)
+
+        # klawiatura pamięci
+        mem_pad = tk.Frame(bottom_pad)
+        mem_pad.pack(side=tk.LEFT)
+        ii = 0
+        tk.Button(
+            mem_pad, text='MC', width=5,
+            command=self.calculator.clean_memory
+        ).grid(row=ii, column=0)
+        ii += 1
+        tk.Button(
+            mem_pad, text='MR', width=5,
+            command=self.replace_var
+        ).grid(row=ii, column=0)
+        ii += 1
+        tk.Button(
+            mem_pad, text='M+', width=5,
+            command=self.calculator.memorize
+        ).grid(row=ii, column=0)
+        ii += 1
+        tk.Button(
+            mem_pad, text='C', width=5,
+            command=self.clear
+        ).grid(row=ii, column=0)
 
         return bottom_pad
 
@@ -79,7 +105,7 @@ class CalculatorGUI(tk.Frame):
             self.variables['var_2'] = ''
         self.update_screen()
 
-    def update_var(self, num):
+    def update_var(self, num, *args):
         state = self.state.get()
         if state:
             self.variables['var_1'] += str(num)
@@ -89,13 +115,38 @@ class CalculatorGUI(tk.Frame):
             self.variables['var_2'] = self.variables['var_2'].lstrip('0')
         self.update_screen()
 
-    def set_operator(self, operator):
+    def decimate_var(self):
+        state = self.state.get()
+        if state:
+            if '.' not in self.variables['var_1']:
+                self.variables['var_1'] += '.'
+        else:
+            if '.' not in self.variables['var_2']:
+                self.variables['var_2'] += '.'
+        self.update_screen()
+
+    def replace_var(self):
+        state = self.state.get()
+        num = self.calculator.memory
+        if state:
+            self.variables['var_1'] += str(num)
+        else:
+            self.variables['var_2'] += str(num)
+        self.update_screen()
+
+    def get_var(self):
+        if self.state:
+            return self.variables['var_1']
+        else:
+            return self.variables['var_2']
+
+    def set_operator(self, operator, *args):
         if self.variables['var_1']:
             self.variables['operator'] = operator
             self.state.set(not self.state.get())
             self.update_screen()
 
-    def calculate_result(self):
+    def calculate_result(self, *args):
         if self.variables['var_1'] and self.variables['var_2']:
             var_1 = int(self.variables['var_1'])
             var_2 = int(self.variables['var_2'])

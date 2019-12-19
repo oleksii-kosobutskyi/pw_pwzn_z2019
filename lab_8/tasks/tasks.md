@@ -41,8 +41,7 @@ z niepewnością pomiarową.
 * Sprawdź, niepewność względna których punktów przekracza 5%. 
 Wykonaj dopaswanie tylko dla punktów, 
 których niepewność pomiarowa nie przekraczaja 5%.
-* Wykreśl wczytane dane, wraz z niepewnością pomiarow
-ą (rozmiar znacznika punktu 2). 
+* Wykreśl wczytane dane, wraz z niepewnością pomiarową (rozmiar znacznika punktu 2). 
 Punkty, których niepewność pomiarowa nie przekracza 5% 
 mają być wykreślone czarnymi kwadratami. 
 Punkty przekraczające - czerwonymi trójkątami.
