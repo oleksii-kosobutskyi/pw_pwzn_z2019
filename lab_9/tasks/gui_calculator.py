@@ -18,12 +18,7 @@ class CalculatorGUI(tk.Frame):
         self.bottom_pad = self.init_bottom_pad()
         self.bottom_pad.pack(side=tk.BOTTOM)
 
-        for num in range(0,10):
-            self.bind(str(num), partial(self.update_var, num))
-        for operation in self.calculator.operations.keys():
-            self.screen.bind(f'<{operation}>', partial(self.set_operator, operation))
-        self.bind('<Return>', self.calculate_result)
-        self.focus_set()
+        self.bind_keyboard()
 
     def init_variables(self):
         self.variables['var_1'] = ''
@@ -33,35 +28,6 @@ class CalculatorGUI(tk.Frame):
 
     def init_bottom_pad(self):
         bottom_pad = tk.Frame(self)
-
-        # klawiatura numeryczna
-        num_pad = tk.Frame(bottom_pad)
-        num_pad.pack(side=tk.LEFT)
-        ii = 0
-        for ii, num in enumerate(range(9, 0, -1)):
-            tk.Button(
-                num_pad, text=num, width=5,
-                command=partial(self.update_var, num)
-            ).grid(row=ii // 3, column=(2-ii) % 3)
-        ii += 1
-        tk.Button(
-            num_pad, text='0', width=5,
-            command=partial(self.update_var, '0')
-        ).grid(row=ii // 3, column=ii % 3)
-        ii += 1
-        tk.Button(
-            num_pad, text='=', width=5,
-            command=self.calculate_result
-        ).grid(row=ii // 3, column=ii % 3)
-
-        # klawiatura operacji
-        operation_pad = tk.Frame(bottom_pad)
-        operation_pad.pack(side=tk.RIGHT)
-        for ii, operation in enumerate(self.calculator.operations.keys()):
-            tk.Button(
-                operation_pad, text=operation, width=5,
-                command=partial(self.set_operator, operation),
-            ).grid(row=ii, column=0)
 
         # klawiatura pamięci
         mem_pad = tk.Frame(bottom_pad)
@@ -87,6 +53,40 @@ class CalculatorGUI(tk.Frame):
             command=self.clear
         ).grid(row=ii, column=0)
 
+        # klawiatura numeryczna
+        num_pad = tk.Frame(bottom_pad)
+        num_pad.pack(side=tk.LEFT)
+        ii = 0
+        for ii, num in enumerate(range(9, 0, -1)):
+            tk.Button(
+                num_pad, text=num, width=5,
+                command=partial(self.update_var, num)
+            ).grid(row=ii // 3, column=(2-ii) % 3)
+        ii += 1
+        tk.Button(
+            num_pad, text='0', width=5,
+            command=partial(self.update_var, '0')
+        ).grid(row=ii // 3, column=ii % 3)
+        ii += 1
+        tk.Button(
+            num_pad, text='.', width=5,
+            command=self.decimate_var
+        ).grid(row=ii // 3, column=ii % 3)
+        ii += 1
+        tk.Button(
+            num_pad, text='=', width=5,
+            command=self.calculate_result
+        ).grid(row=ii // 3, column=ii % 3)
+
+        # klawiatura operacji
+        operation_pad = tk.Frame(bottom_pad)
+        operation_pad.pack(side=tk.RIGHT)
+        for ii, operation in enumerate(self.calculator.operations.keys()):
+            tk.Button(
+                operation_pad, text=operation, width=5,
+                command=partial(self.set_operator, operation),
+            ).grid(row=ii, column=0)
+
         return bottom_pad
 
     def update_screen(self):
@@ -97,7 +97,7 @@ class CalculatorGUI(tk.Frame):
             text += f" {self.variables['var_2']}"
         self.screen['text'] = text
 
-    def clear(self):
+    def clear(self, *args):
         state = self.state.get()
         if state:
             self.variables['var_1'] = ''
@@ -109,13 +109,13 @@ class CalculatorGUI(tk.Frame):
         state = self.state.get()
         if state:
             self.variables['var_1'] += str(num)
-            self.variables['var_1'] = self.variables['var_1'].lstrip('0')
+            #self.variables['var_1'] = self.variables['var_1'].lstrip('0')
         else:
             self.variables['var_2'] += str(num)
-            self.variables['var_2'] = self.variables['var_2'].lstrip('0')
+            #self.variables['var_2'] = self.variables['var_2'].lstrip('0')
         self.update_screen()
 
-    def decimate_var(self):
+    def decimate_var(self, *args):
         state = self.state.get()
         if state:
             if '.' not in self.variables['var_1']:
@@ -148,12 +148,28 @@ class CalculatorGUI(tk.Frame):
 
     def calculate_result(self, *args):
         if self.variables['var_1'] and self.variables['var_2']:
-            var_1 = int(self.variables['var_1'])
-            var_2 = int(self.variables['var_2'])
+            var_1 = float(self.variables['var_1'])
+            var_2 = float(self.variables['var_2'])
             self.screen['text'] = self.calculator.run(
                 self.variables['operator'], var_1, var_2
             )
             self.init_variables()
+
+    def bind_keyboard(self):
+        # klawiatura numeryczna
+        for num in range(0, 10):
+            self.bind(str(num), partial(self.update_var, num))
+        self.bind("<.>", partial(self.decimate_var))
+        self.bind("<Return>", self.calculate_result)
+        # klawiatura operacji
+        #for operation in self.calculator.operations.keys():
+            #self.bind(f'<{operation}>', partial(self.set_operator, operation))
+        self.bind("<+>", partial(self.set_operator, '+'))
+        self.bind("<minus>", partial(self.set_operator, '-'))
+        self.bind("<*>", partial(self.set_operator, '*'))
+        self.bind("</>", partial(self.set_operator, '/'))
+        self.bind("<Delete>", partial(self.clear))
+        self.focus_set()
 
 
 if __name__ == '__main__':
