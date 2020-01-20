@@ -74,7 +74,6 @@ def parse_dates(date_str, date_format=''):
     return dates
 
 
-
 if __name__ == '__main__':
     dates = """
     Sun 10 May 2015 13:54:36 -0700

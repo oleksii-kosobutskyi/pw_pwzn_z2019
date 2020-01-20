@@ -29,9 +29,8 @@ from numbers import Number
 from math import pi, sqrt
 
 
-
 class Figure:
-    
+
     @property
     def area(self): # public
         raise NotImplementedError
@@ -51,9 +50,8 @@ class Figure:
         )
 
 
-
 class Circle(Figure):
-    
+
     __r = 1 # private
 
     def __init__(self, r): # magic
@@ -62,7 +60,7 @@ class Circle(Figure):
     @property
     def r(self): # public
         return self._r
-    
+
     @r.setter
     def r(self, x): # public
         if isinstance(x, Number):
@@ -87,9 +85,8 @@ class Circle(Figure):
         return 2*pi*radius
 
 
-
 class Rectangle(Figure):
-    
+
     _a = 1
     _b = 1
 
@@ -114,11 +111,11 @@ class Rectangle(Figure):
         else:
             print("Not number value!")
     b = property(get_b, set_b)
-    
+
     @property
     def area(self):
         return self.a*self.b
-    
+
     @property
     def perimeter(self):
         return 2*(self.a+self.b)
@@ -130,7 +127,6 @@ class Rectangle(Figure):
     @staticmethod
     def get_perimeter(a, b):
         return 2*(a+b)
-
 
 
 class Diamond(Figure):
@@ -162,7 +158,7 @@ class Diamond(Figure):
     @property
     def area(self):
         return self.e*self.f/2
-    
+
     @property
     def perimeter(self):
         return 4*sqrt((self.e**2+self.f**2)/4)
@@ -187,13 +183,12 @@ class Diamond(Figure):
             return None
 
 
-
 class Square(Rectangle, Diamond):
-    
+
     def __init__(self, a):
         self.a = a
         self.e = a*sqrt(2)
-        
+
     def set_a(self, x):
         if isinstance(x, Number):
             self._a = x
@@ -201,7 +196,7 @@ class Square(Rectangle, Diamond):
         else:
             print("Not number value!")
     a = property(Rectangle.get_a, set_a)
-    
+
     def set_b(self, x):
         if isinstance(x, Number):
             self._b = x
@@ -235,7 +230,6 @@ class Square(Rectangle, Diamond):
         return 4*a
 
 
-
 if __name__ == '__main__':
     kolo1 = Circle(1)
     assert str(kolo1) == 'Circle: area=3.142, perimeter=6.283'
@@ -254,4 +248,3 @@ if __name__ == '__main__':
 
     sqr_3 = diam_2.to_square()
     assert str(sqr_3) == 'Square: area=0.500, perimeter=2.828'
-    

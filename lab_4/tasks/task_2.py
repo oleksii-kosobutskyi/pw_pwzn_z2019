@@ -13,7 +13,7 @@ Wszystkie metody sprawdzają wymiar.
 
 class Vector:
     _dim = None  # Wymiar vectora
-    
+
     def __init__(self, *args):
         if len(args)!=0:
             self.values = args
@@ -25,18 +25,18 @@ class Vector:
     # wymiar wektora
     def __len__(self):
         return self._dim
-    
+
     @property
     # wymiar wektora
     def dim(self):
         return self._dim
-    
+
     @property
     # długosć wektora
     def len(self):
         length=sum(tuple(a**2 for a in self.values))**0.5
         return length
-    
+
     @staticmethod
     def calculate_vector(beg, end):
         """
@@ -76,7 +76,7 @@ class Vector:
             return v_end-v_beg
         else:
             raise ValueError("Różne wymiary wektorów")
-            
+
     # dodawanie wektorów
     def __add__(self, another):
         if isinstance(another,Vector):
@@ -98,7 +98,7 @@ class Vector:
                 raise ValueError("Różne wymiary wektorów")
         else:
             raise ValueError("Obiekt jest innego typu niż Vector")
-    
+
     # mnożenie wektorów
     def __mul__(self, another):
         if isinstance(another,Vector):
@@ -120,7 +120,6 @@ class Vector:
                 raise ValueError("Różne wymiary wektorów")
         else:
             raise ValueError("Obiekt jest innego typu niż Vector")
-
 
 
 if __name__ == '__main__':

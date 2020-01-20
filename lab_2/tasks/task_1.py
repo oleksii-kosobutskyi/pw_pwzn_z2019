@@ -25,7 +25,6 @@ def counting_sort(values, _max, _min=0):
     return output
 
 
-
 if __name__ == '__main__':
     assert counting_sort(
         [99, 4, 33, 2, 2, 1, 65, 3, 97, 53],

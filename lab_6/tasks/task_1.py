@@ -38,9 +38,8 @@ import csv
 from collections import namedtuple
 
 
-
 def select_animals(input_path, output_path, compressed=False):
-    
+
     with open(input_path, 'r') as file_:
         reader = csv.reader(file_, delimiter=',')
         headers = next(reader, None)
@@ -65,13 +64,13 @@ def select_animals(input_path, output_path, compressed=False):
 
         sorted_animals = sorted(selected_animals, key = lambda anim: (anim.generations,
                                                                       anim.name))
-        
+
         if not compressed:
             with open(output_path, 'w') as _file:
                 writer = csv.writer(_file, delimiter=',', quotechar="*")
                 writer.writerow(headers)
                 writer.writerows(sorted_animals)
-        
+
         elif compressed:
             units = {
                 'mg': 0.001,
@@ -94,10 +93,9 @@ def select_animals(input_path, output_path, compressed=False):
                                                  '%.3e' % mass])
                     compressed_animals.append(compressed_animal)
                 # import ipdb; ipdb.set_trace()
-                
+
                 for row in compressed_animals:
                     _file.write(row + '\n')
-
 
 
 if __name__ == '__main__':

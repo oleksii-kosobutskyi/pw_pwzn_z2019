@@ -32,7 +32,6 @@ def check_frequency(input):
     return output
 
 
-
 _input = """
 1 5
 1 6
@@ -48,4 +47,3 @@ _input = """
 """
 if __name__ == '__main__':
     assert check_frequency(_input) == [0, 0]
-    

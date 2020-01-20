@@ -12,12 +12,11 @@ dwuelementową tuplę zawierającą liczbę poprawnych wierszy:
 import re
 
 
-
 def check_animal_list(file_path):
-    
+
     with open(file_path) as _file:
         lines = _file.readlines()
-    
+
     male_num = 0
     female_num = 0
 
@@ -25,10 +24,9 @@ def check_animal_list(file_path):
         line = line.strip()
         male_num += bool(re.fullmatch(r'^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}_M_[\d]\.[\d]{3}e[\-\+][\d]{2}$', line))
         female_num += bool(re.fullmatch(r'^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}_F_[\d]\.[\d]{3}e[\-\+][\d]{2}$', line))
-        # import ipdb; ipdb.set_trace()   
+        # import ipdb; ipdb.set_trace()
 
     return (female_num, male_num)
-
 
 
 if __name__ == '__main__':

@@ -10,29 +10,24 @@ jak i operację z argumentem domyślnym) - EmptyMemory
 from operator import add, mul, sub, truediv
 
 
-
 class CalculatorError(Exception):
     pass
-
 
 
 class WrongOperation(Exception):
     pass
 
 
-
 class NotNumberArgument(Exception):
     pass
-
 
 
 class EmptyMemory(Exception):
     pass
 
 
-
 class Calculator:
-    
+
     operations = {
         '+': add,
         '-': sub,
@@ -90,7 +85,6 @@ class Calculator:
             print(f"Zapamiętana wartość: {self.memory}")
         else:
             raise EmptyMemory()
-
 
 
 if __name__ == '__main__':

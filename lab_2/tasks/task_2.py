@@ -12,29 +12,29 @@ def stack_operation(stack_commands):
     :return: List of outputs from commands.
     :rtype: list
     """
-    output=[]
-    i=0
-    for element in stack_commands:
-        if 'push' in element[0]:
-            output.append(element[1])
-        elif 'pop' in element[0]:
-            output.pop()
-        i+=1
-    return output
-
+    stack = []
+    max_vals = []
+    for command in stack_commands:
+        if 'push' in command[0]:
+            stack.append(command[1])
+        elif 'pop' in command[0]:
+            stack.pop()
+        elif 'show_max' in command[0]:
+            max_vals.append(max(stack))
+    return max_vals
 
 
 if __name__ == "__main__":
     commands = [
         ('push', 97),
         ('pop',),
-        ('push', 20), 
-        ('pop',), 
-        ('push', 26), 
-        ('push', 20), 
-        ('pop',), 
-        ('show_max',), 
-        ('push', 91), 
+        ('push', 20),
+        ('pop',),
+        ('push', 26),
+        ('push', 20),
+        ('pop',),
+        ('show_max',),
+        ('push', 91),
         ('show_max',)
     ]
     assert stack_operation(commands) == [26, 91]

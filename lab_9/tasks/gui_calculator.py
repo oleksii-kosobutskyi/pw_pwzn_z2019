@@ -109,10 +109,10 @@ class CalculatorGUI(tk.Frame):
         state = self.state.get()
         if state:
             self.variables['var_1'] += str(num)
-            #self.variables['var_1'] = self.variables['var_1'].lstrip('0')
+            # self.variables['var_1'] = self.variables['var_1'].lstrip('0')
         else:
             self.variables['var_2'] += str(num)
-            #self.variables['var_2'] = self.variables['var_2'].lstrip('0')
+            # self.variables['var_2'] = self.variables['var_2'].lstrip('0')
         self.update_screen()
 
     def decimate_var(self, *args):
@@ -133,12 +133,6 @@ class CalculatorGUI(tk.Frame):
         else:
             self.variables['var_2'] += str(num)
         self.update_screen()
-
-    def get_var(self):
-        if self.state:
-            return self.variables['var_1']
-        else:
-            return self.variables['var_2']
 
     def set_operator(self, operator, *args):
         if self.variables['var_1']:
@@ -162,8 +156,8 @@ class CalculatorGUI(tk.Frame):
         self.bind("<.>", partial(self.decimate_var))
         self.bind("<Return>", self.calculate_result)
         # klawiatura operacji
-        #for operation in self.calculator.operations.keys():
-            #self.bind(f'<{operation}>', partial(self.set_operator, operation))
+        # for operation in self.calculator.operations.keys():
+            # self.bind(f'<{operation}>', partial(self.set_operator, operation))
         self.bind("<+>", partial(self.set_operator, '+'))
         self.bind("<minus>", partial(self.set_operator, '-'))
         self.bind("<*>", partial(self.set_operator, '*'))
