@@ -1,5 +1,12 @@
 def generate_fibonacci(n=100):
-    pass
+    if (not isinstance(n, int) or n > 100 or n < 1):
+        raise RuntimeError
+
+    number1 = 0
+    number2 = 1
+    for i in range(0, n):
+        yield number1
+        [number1, number2] = [number2, number1 + number2]
 
 
 if __name__ == '__main__':

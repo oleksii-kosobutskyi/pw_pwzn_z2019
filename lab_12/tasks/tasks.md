@@ -1,7 +1,7 @@
 ## 1. (2 pkt):
 Napisz generator zwracający liczby z ciągu Fibbonaciego.
-Generator może przyjąć jednen parametr - liczbę n (integer) pierwszych liczb
-ciągu, które ma zwrócić generator. 
+Generator może przyjąć jeden parametr - liczbę n (integer) pierwszych liczb
+ciągu, które ma zwrócić generator.
 Generator może zwrócić maksymalnie 100 minimalnie 1 liczbę ciągu.
 Przy podaniu złej wartości parametru funckja ma podnosić `RuntimeError`
 
@@ -17,15 +17,15 @@ Napisz dekorator logujący (z datą logu w formacie `YYYY-mm-ddTHH:MM:SS`):
 Przykładowe logi (do wywołań z zadania):
 >2020-01-23T21:09:55| function sum called with:
 >
->1 postional parameters
+>1 positional parameters
 >
-> optional parameters: -
+>optional parameters: -
 >
 >returned: 6 (1.43e-06s)
 >
 >2020-01-23T21:09:55| function fun called with:
 >
->3 postional parameters
+>3 positional parameters
 >
 >optional parameters: bb
 >
